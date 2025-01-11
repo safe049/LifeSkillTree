@@ -31,6 +31,14 @@ git clone https://github.com/safe049/LifeSkillTree.git
 
 2. 打开index.html文件
 
+## 贡献
+
+欢迎提交PR以更新成就,或添加功能和机制
+
+在添加功能或成就前请务必确保你的Fork分支是最新版本
+
+
+
 ## 许可证
 
 Apache License 2.0

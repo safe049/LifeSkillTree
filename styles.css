@@ -8,6 +8,7 @@ body {
     background-image: url('https://img.picui.cn/free/2025/01/11/67822994370e8.jpg') ;
     background-size: cover;
     background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 #app {
@@ -20,7 +21,6 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow: auto;
     background-color: rgba(255, 255, 255, 0.7);
-    background-attachment: fixed;
 }
 
 #search {

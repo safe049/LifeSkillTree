@@ -3,47 +3,15 @@ body {
     background-color: #f4f4f4;
     margin: 0;
     padding: 20px;
-    display: flex;
-    justify-content: center;
 }
 
 #app {
-    display: flex;
-    max-width: 1200px;
-    width: 100%;
+    max-width: 800px;
+    margin: auto;
     background: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-#sidebar {
-    width: 200px;
-    margin-right: 20px;
-}
-
-#sidebar .category-btn {
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#sidebar .category-btn.active {
-    background-color: #0056b3;
-}
-
-#sidebar .category-btn:hover {
-    background-color: #0056b3;
-}
-
-#main {
-    flex: 1;
 }
 
 h1 {
@@ -83,7 +51,6 @@ h1 {
 
 .category {
     margin-bottom: 15px;
-    display: none; /* 默认不显示 */
 }
 
 .category h2 {

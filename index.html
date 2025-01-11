@@ -9,21 +9,12 @@
 <body>
     <div id="app">
         <h1>人生成就树</h1>
-        <div id="sidebar">
-            <button class="category-btn active" data-category="全部">全部</button>
-            <button class="category-btn" data-category="工作">工作</button>
-            <button class="category-btn" data-category="学业">学业</button>
-            <button class="category-btn" data-category="生活">生活</button>
-            <button class="category-btn" data-category="杂项">杂项</button>
+        <div id="search">
+            <input type="text" id="search-input" placeholder="搜索成就...">
+            <button id="search-btn">搜索</button>
         </div>
-        <div id="main">
-            <div id="search">
-                <input type="text" id="search-input" placeholder="搜索成就...">
-                <button id="search-btn">搜索</button>
-            </div>
-            <div id="tree"></div>
-            <button id="download-btn">下载本地存储</button>
-        </div>
+        <div id="tree"></div>
+        <button id="download-btn">下载本地存储</button>
     </div>
 
     <script src="scripts.js"></script>

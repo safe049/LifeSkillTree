@@ -1,28 +1,30 @@
 document.addEventListener('DOMContentLoaded', () => {
     const treeContainer = document.getElementById('tree');
-    const categoryBtns = document.querySelectorAll('.category-btn');
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.getElementById('search-btn');
     const downloadBtn = document.getElementById('download-btn');
 
-    // 模拟数据
-    const achievements = {
-        "工作": ["项目管理", "团队协作", "代码编写"],
-        "学业": ["数学竞赛获奖", "英语六级通过", "论文发表"],
-        "生活": ["马拉松完成", "摄影技能", "烹饪美食"],
-        "杂项": ["学习新语言", "旅行各国", "志愿服务"]
-    };
+    // 读取 achievements.json 文件
+    fetch('achievements.json')
+        .then(response => response.json())
+        .then(data => {
+            renderTree(data);
+        })
+        .catch(error => console.error('Error loading achievements:', error));
 
+    // 渲染树形结构
     function renderTree(data) {
-        treeContainer.innerHTML = ''; // 清空现有内容
         for (const category in data) {
             const categoryDiv = document.createElement('div');
-            categoryDiv.className = `category ${category.toLowerCase()}`;
-            categoryDiv.classList.add('active'); // 默认全部显示
+            categoryDiv.className = 'category';
 
             const categoryHeader = document.createElement('h2');
             categoryHeader.textContent = category;
             categoryDiv.appendChild(categoryHeader);
 
             const itemsList = document.createElement('ul');
+            itemsList.className = 'items';
+
             data[category].forEach(item => {
                 const itemLi = document.createElement('li');
                 itemLi.className = 'item';
@@ -31,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 checkbox.type = 'checkbox';
                 checkbox.name = `${category}-${item}`;
                 checkbox.id = `${category}-${item}`;
+                checkbox.checked = localStorage.getItem(`${category}-${item}`) === 'true';
 
                 const label = document.createElement('label');
                 label.htmlFor = `${category}-${item}`;
@@ -38,30 +41,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 itemLi.appendChild(checkbox);
                 itemLi.appendChild(label);
+
                 itemsList.appendChild(itemLi);
+
+                checkbox.addEventListener('change', () => {
+                    localStorage.setItem(`${category}-${item}`, checkbox.checked);
+                });
             });
+
             categoryDiv.appendChild(itemsList);
             treeContainer.appendChild(categoryDiv);
         }
     }
 
-    renderTree(achievements);
-
-    categoryBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            categoryBtns.forEach(button => button.classList.remove('active'));
-            categories.forEach(category => category.classList.remove('active'));
-
-            btn.classList.add('active');
-            const selectedCategory = btn.getAttribute('data-category');
-            if (selectedCategory === '全部') {
-                document.querySelectorAll('.category').forEach(category => category.classList.add('active'));
-            } else {
-                document.querySelector(`.category.${selectedCategory}`).classList.add('active');
-            }
-        });
+    // 搜索功能
+    searchBtn.addEventListener('click', () => {
+        performSearch();
     });
 
+    searchInput.addEventListener('keyup', (event) => {
+        if (event.key === 'Enter') {
+            performSearch();
+        }
+    });
+
+    function performSearch() {
+        const searchQuery = searchInput.value.toLowerCase();
+        const labels = document.querySelectorAll('.item label');
+
+        labels.forEach(label => {
+            const text = label.textContent.toLowerCase();
+            if (text.includes(searchQuery)) {
+                label.classList.add('highlight');
+            } else {
+                label.classList.remove('highlight');
+            }
+        });
+    }
+
+    // 下载本地存储数据
     downloadBtn.addEventListener('click', () => {
         const data = {};
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');

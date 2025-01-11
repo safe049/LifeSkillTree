@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 20px;
     display: flex;
+    justify-content: center;
 }
 
 #app {
@@ -37,8 +38,17 @@ body {
     background-color: #0056b3;
 }
 
+#sidebar .category-btn:hover {
+    background-color: #0056b3;
+}
+
 #main {
     flex: 1;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
 }
 
 #search {
@@ -72,11 +82,8 @@ body {
 }
 
 .category {
-    display: none;
-}
-
-.category.active {
-    display: block;
+    margin-bottom: 15px;
+    display: none; /* 默认不显示 */
 }
 
 .category h2 {

@@ -3,7 +3,7 @@ body {
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    background-image: url('https://tutu.to/image/hUMvR'); /* 替换为远程背景图的URL */
+    background-image: url('https://tutu.to/image/hUMvR'); /* 远程背景图 */
     background-size: cover; /* 背景图覆盖整个页面 */
     background-position: center; /* 背景图居中显示 */
     background-repeat: no-repeat; /* 背景图不重复 */

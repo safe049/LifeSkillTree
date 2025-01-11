@@ -105,14 +105,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function performSearch() {
         const searchQuery = searchInput.value.toLowerCase();
-        const labels = document.querySelectorAll('.item label');
-
-        labels.forEach(label => {
-            const text = label.textContent.toLowerCase();
+        const itemLiElements = document.querySelectorAll('.item');
+    
+        itemLiElements.forEach(li => {
+            const text = li.textContent.toLowerCase();
             if (text.includes(searchQuery)) {
-                label.classList.add('highlight');
+                li.style.display = 'list-item'; // 显示匹配的 li
             } else {
-                label.classList.remove('highlight');
+                li.style.display = 'none'; // 隐藏不匹配的 li
             }
         });
     }

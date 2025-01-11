@@ -1,7 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
-    margin: 0;
+    margin: auto;
     padding: 0; /* 移除默认的内边距 */
     display: flex;
     justify-content: center; /* 水平居中 */

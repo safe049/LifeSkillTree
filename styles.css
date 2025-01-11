@@ -2,19 +2,18 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
-    padding: 0;
-    background-image: url('https://tutu.to/image/hUMvR'); /* 远程背景图 */
-    background-size: cover; /* 背景图覆盖整个页面 */
-    background-position: center; /* 背景图居中显示 */
-    background-repeat: no-repeat; /* 背景图不重复 */
+    padding: 0; /* 移除默认的内边距 */
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
 }
 
 #app {
     display: flex;
-    flex-direction: column;
-    max-width: 800px;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.8); /* 设置半透明背景 */
+    flex-direction: column; /* 使内容垂直堆叠 */
+    max-width: 800px; /* 设置最大宽度 */
+    width: 100%; /* 宽度自适应 */
+    background: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

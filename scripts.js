@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const treeContainer = document.getElementById('tree');
-    const exportBtn = document.getElementById('export-btn');
-    const importBtn = document.getElementById('import-btn');
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.getElementById('search-btn');
+    const downloadBtn = document.getElementById('download-btn');
 
     // 读取 achievements.json 文件
     fetch('achievements.json')
@@ -53,44 +54,45 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 导出 XML 文件
-    exportBtn.addEventListener('click', () => {
-        const xmlContent = '<?xml version="1.0" encoding="UTF-8"?><achievements>';
+    // 搜索功能
+    searchBtn.addEventListener('click', () => {
+        performSearch();
+    });
+
+    searchInput.addEventListener('keyup', (event) => {
+        if (event.key === 'Enter') {
+            performSearch();
+        }
+    });
+
+    function performSearch() {
+        const searchQuery = searchInput.value.toLowerCase();
+        const labels = document.querySelectorAll('.item label');
+
+        labels.forEach(label => {
+            const text = label.textContent.toLowerCase();
+            if (text.includes(searchQuery)) {
+                label.classList.add('highlight');
+            } else {
+                label.classList.remove('highlight');
+            }
+        });
+    }
+
+    // 下载本地存储数据
+    downloadBtn.addEventListener('click', () => {
+        const data = {};
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach(checkbox => {
-            xmlContent += `<${checkbox.name}>${checkbox.checked}</${checkbox.name}>`;
+            data[checkbox.name] = checkbox.checked;
         });
-        xmlContent += '</achievements>';
 
-        const blob = new Blob([xmlContent], { type: 'application/xml' });
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'achievements.xml';
+        a.download = 'achievements.json';
         a.click();
         URL.revokeObjectURL(url);
-    });
-
-    // 导入 XML 文件
-    importBtn.addEventListener('change', (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const xmlContent = e.target.result;
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(xmlContent, 'application/xml');
-                const achievements = xmlDoc.getElementsByTagName('achievements')[0];
-                for (let i = 0; i < achievements.children.length; i++) {
-                    const item = achievements.children[i];
-                    const checkbox = document.querySelector(`input[name="${item.nodeName}"]`);
-                    if (checkbox) {
-                        checkbox.checked = item.textContent === 'true';
-                        localStorage.setItem(item.nodeName, item.textContent);
-                    }
-                }
-            };
-            reader.readAsText(file);
-        }
     });
 });

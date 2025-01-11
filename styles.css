@@ -19,6 +19,32 @@ h1 {
     color: #333;
 }
 
+#search {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#search-input {
+    padding: 10px;
+    width: 70%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#search-btn, #download-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#search-btn:hover, #download-btn:hover {
+    background-color: #0056b3;
+}
+
 #tree {
     margin-top: 20px;
 }
@@ -40,18 +66,10 @@ h1 {
     margin-right: 10px;
 }
 
-button, #import-label {
-    display: inline-block;
-    margin-right: 10px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.item label {
     transition: background-color 0.3s;
 }
 
-button:hover, #import-label:hover {
-    background-color: #0056b3;
+.item label.highlight {
+    background-color: #ffffcc;
 }

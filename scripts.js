@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     levelDisplay.id = 'level-display';
     levelDisplay.style.marginTop = '20px';
     levelDisplay.style.textAlign = 'center';
-    document.body.appendChild(levelDisplay);
+    // document.body.appendChild(levelDisplay);
+    // 这一行代码导致了界面bug
 
     // 读取 achievements.json 文件
     fetch('achievements.json')

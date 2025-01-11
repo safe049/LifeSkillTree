@@ -2,21 +2,22 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
-    padding: 20px;
+    padding: 0; /* 移除默认的内边距 */
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    height: 100vh; /* 使 body 占满整个视口高度 */
 }
 
 #app {
-    max-width: 800px;
-    margin: auto;
+    display: flex;
+    flex-direction: column; /* 使内容垂直堆叠 */
+    max-width: 800px; /* 设置最大宽度 */
+    width: 100%; /* 宽度自适应 */
     background: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    text-align: center;
-    color: #333;
 }
 
 #search {

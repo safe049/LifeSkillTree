@@ -75,3 +75,8 @@ body {
 .item label.highlight {
     background-color: #ffffcc;
 }
+
+#level-display {
+    font-size: 1.2em;
+    color: #333;
+}

@@ -3,12 +3,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const searchBtn = document.getElementById('search-btn');
     const downloadBtn = document.getElementById('download-btn');
+    const levelDisplay = document.getElementById('level-display'); 
+    levelDisplay.id = 'level-display';
+    levelDisplay.style.marginTop = '20px';
+    levelDisplay.style.textAlign = 'center';
+    document.body.appendChild(levelDisplay);
 
     // 读取 achievements.json 文件
     fetch('achievements.json')
         .then(response => response.json())
         .then(data => {
             renderTree(data);
+            updateLevel(data); // 初始加载时更新等级
         })
         .catch(error => console.error('Error loading achievements:', error));
 
@@ -46,12 +52,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 checkbox.addEventListener('change', () => {
                     localStorage.setItem(`${category}-${item}`, checkbox.checked);
+                    updateLevel(data); // 每次成就状态改变时更新等级
                 });
             });
 
             categoryDiv.appendChild(itemsList);
             treeContainer.appendChild(categoryDiv);
         }
+    }
+
+    // 更新等级
+    function updateLevel(data) {
+        let totalAchievements = 0;
+        let completedAchievements = 0;
+
+        for (const category in data) {
+            data[category].forEach(item => {
+                totalAchievements++;
+                if (localStorage.getItem(`${category}-${item}`) === 'true') {
+                    completedAchievements++;
+                }
+            });
+        }
+
+        const level = calculateLevel(completedAchievements, totalAchievements);
+        localStorage.setItem('level', level); // 保存等级到本地存储
+        levelDisplay.textContent = `当前等级: ${level}`;
+    }
+
+    // 计算等级
+    function calculateLevel(completed, total) {
+        const percentage = (completed / total) * 100;
+        if (percentage >= 100) return 'lv.6:挂!';
+        if (percentage >= 80) return 'lv.5:这个入是挂!';
+        if (percentage >= 60) return 'lv.4:人生的赢家';
+        if (percentage >= 40) return 'lv.3:少数';
+        if (percentage >= 20) return 'lv.2:懵懂';
+        return 'lv.1:还没出生';
     }
 
     // 搜索功能

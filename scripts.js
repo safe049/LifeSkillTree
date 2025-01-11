@@ -1,33 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
     const treeContainer = document.getElementById('tree');
-    const searchInput = document.getElementById('search-input');
-    const searchBtn = document.getElementById('search-btn');
-    const downloadBtn = document.getElementById('download-btn');
     const categoryBtns = document.querySelectorAll('.category-btn');
+    const downloadBtn = document.getElementById('download-btn');
 
-    // 读取 achievements.json 文件
-    fetch('achievements.json')
-        .then(response => response.json())
-        .then(data => {
-            renderTree(data);
-            // 默认显示全部类别
-            showCategory('全部');
-        })
-        .catch(error => console.error('Error loading achievements:', error));
+    // 模拟数据
+    const achievements = {
+        "工作": ["项目管理", "团队协作", "代码编写"],
+        "学业": ["数学竞赛获奖", "英语六级通过", "论文发表"],
+        "生活": ["马拉松完成", "摄影技能", "烹饪美食"],
+        "杂项": ["学习新语言", "旅行各国", "志愿服务"]
+    };
 
-    // 渲染树形结构
     function renderTree(data) {
+        treeContainer.innerHTML = ''; // 清空现有内容
         for (const category in data) {
             const categoryDiv = document.createElement('div');
             categoryDiv.className = `category ${category.toLowerCase()}`;
+            categoryDiv.classList.add('active'); // 默认全部显示
 
             const categoryHeader = document.createElement('h2');
             categoryHeader.textContent = category;
             categoryDiv.appendChild(categoryHeader);
 
             const itemsList = document.createElement('ul');
-            itemsList.className = 'items';
-
             data[category].forEach(item => {
                 const itemLi = document.createElement('li');
                 itemLi.className = 'item';
@@ -36,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 checkbox.type = 'checkbox';
                 checkbox.name = `${category}-${item}`;
                 checkbox.id = `${category}-${item}`;
-                checkbox.checked = localStorage.getItem(`${category}-${item}`) === 'true';
 
                 const label = document.createElement('label');
                 label.htmlFor = `${category}-${item}`;
@@ -44,71 +38,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 itemLi.appendChild(checkbox);
                 itemLi.appendChild(label);
-
                 itemsList.appendChild(itemLi);
-
-                checkbox.addEventListener('change', () => {
-                    localStorage.setItem(`${category}-${item}`, checkbox.checked);
-                });
             });
-
             categoryDiv.appendChild(itemsList);
             treeContainer.appendChild(categoryDiv);
         }
     }
 
-    // 搜索功能
-    searchBtn.addEventListener('click', () => {
-        performSearch();
-    });
+    renderTree(achievements);
 
-    searchInput.addEventListener('keyup', (event) => {
-        if (event.key === 'Enter') {
-            performSearch();
-        }
-    });
-
-    function performSearch() {
-        const searchQuery = searchInput.value.toLowerCase();
-        const labels = document.querySelectorAll('.item label');
-
-        labels.forEach(label => {
-            const text = label.textContent.toLowerCase();
-            if (text.includes(searchQuery)) {
-                label.classList.add('highlight');
-            } else {
-                label.classList.remove('highlight');
-            }
-        });
-    }
-
-    // 分类切换功能
     categoryBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // 移除所有按钮的 active 类
-            categoryBtns.forEach(b => b.classList.remove('active'));
-            // 添加当前按钮的 active 类
+            categoryBtns.forEach(button => button.classList.remove('active'));
+            categories.forEach(category => category.classList.remove('active'));
+
             btn.classList.add('active');
-            // 显示对应类别的成就
-            showCategory(btn.dataset.category);
+            const selectedCategory = btn.getAttribute('data-category');
+            if (selectedCategory === '全部') {
+                document.querySelectorAll('.category').forEach(category => category.classList.add('active'));
+            } else {
+                document.querySelector(`.category.${selectedCategory}`).classList.add('active');
+            }
         });
     });
 
-    function showCategory(category) {
-        if (category === '全部') {
-            document.querySelectorAll('.category').forEach(cat => cat.style.display = 'block');
-        } else {
-            document.querySelectorAll('.category').forEach(cat => {
-                if (cat.classList.contains(category.toLowerCase())) {
-                    cat.style.display = 'block';
-                } else {
-                    cat.style.display = 'none';
-                }
-            });
-        }
-    }
-
-    // 下载本地存储数据
     downloadBtn.addEventListener('click', () => {
         const data = {};
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');

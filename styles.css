@@ -8,6 +8,7 @@ body {
     background-image: url('https://img.picui.cn/free/2025/01/11/67822994370e8.jpg') ;
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
     background-attachment: fixed;
 }
 

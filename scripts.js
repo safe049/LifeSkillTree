@@ -3,12 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const searchBtn = document.getElementById('search-btn');
     const downloadBtn = document.getElementById('download-btn');
+    const categoryBtns = document.querySelectorAll('.category-btn');
 
     // 读取 achievements.json 文件
     fetch('achievements.json')
         .then(response => response.json())
         .then(data => {
             renderTree(data);
+            // 默认显示全部类别
+            showCategory('全部');
         })
         .catch(error => console.error('Error loading achievements:', error));
 
@@ -16,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderTree(data) {
         for (const category in data) {
             const categoryDiv = document.createElement('div');
-            categoryDiv.className = 'category';
+            categoryDiv.className = `category ${category.toLowerCase()}`;
 
             const categoryHeader = document.createElement('h2');
             categoryHeader.textContent = category;
@@ -77,6 +80,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 label.classList.remove('highlight');
             }
         });
+    }
+
+    // 分类切换功能
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // 移除所有按钮的 active 类
+            categoryBtns.forEach(b => b.classList.remove('active'));
+            // 添加当前按钮的 active 类
+            btn.classList.add('active');
+            // 显示对应类别的成就
+            showCategory(btn.dataset.category);
+        });
+    });
+
+    function showCategory(category) {
+        if (category === '全部') {
+            document.querySelectorAll('.category').forEach(cat => cat.style.display = 'block');
+        } else {
+            document.querySelectorAll('.category').forEach(cat => {
+                if (cat.classList.contains(category.toLowerCase())) {
+                    cat.style.display = 'block';
+                } else {
+                    cat.style.display = 'none';
+                }
+            });
+        }
     }
 
     // 下载本地存储数据

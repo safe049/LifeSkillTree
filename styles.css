@@ -5,8 +5,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url('https://tutu.to/image/hUsvA') no-repeat center center fixed;
+    background-image: url('https://img.picui.cn/free/2025/01/11/67822994370e8.jpg') ;
     background-size: cover;
+    background-repeat: no-repeat;
 }
 
 #app {
@@ -35,7 +36,7 @@ body {
 
 #search-btn, #download-btn {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color:rgb(103, 65, 173);
     color: #fff;
     border: none;
     border-radius: 5px;
